@@ -23,10 +23,12 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="snake" />
+        <module name="solid-snake" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="snake" target="1.5" />
+      <module name="snake" target="1.8" />
+      <module name="solid-snake" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
