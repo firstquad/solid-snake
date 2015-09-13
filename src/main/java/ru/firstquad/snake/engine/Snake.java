@@ -53,10 +53,14 @@ public class Snake extends SnakeBody implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         resolveDirection();
+        feed();
+    }
+
+    private void feed() {
         field.getFood().forEach(food -> {
             if (head.getX() == food.getX() && head.getY() == food.getY()) {
-                food.setFill(Color.GREEN);
                 addBodyElement(food);
+                field.scoreUpdate(snake);
             }
         });
     }
@@ -113,6 +117,7 @@ public class Snake extends SnakeBody implements ActionListener {
     }
 
     public void addBodyElement(Rectangle b) {
+        b.setFill(Color.DARKGREEN);
         snake.add(b);
         body.add(b);
     }
