@@ -1,12 +1,12 @@
 package ru.firstquad.snake.engine;
 
 import com.sun.javafx.scene.traversal.Direction;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import ru.firstquad.snake.model.Field;
 import ru.firstquad.snake.model.SnakeBody;
 
 import java.awt.event.ActionEvent;
@@ -16,25 +16,26 @@ import java.awt.event.ActionListener;
  * Created by Dima on 13.09.2015.
  */
 public class Snake extends SnakeBody implements ActionListener {
+    private Field field;
+    private static int speed;
 
-    public Snake(int lenght, Group group, Scene scene) {
+    public Snake(int lenght, Scene scene) {
         processHead();
         processBody();
         for (int i = 0; i < lenght; i++)
             addBodyElement();
-        group.getChildren().add(head);
         addKeyEvent(scene);
-        body.forEach(group.getChildren()::add);
     }
 
     private void processHead() {
-        head.setX(500);
+        head.setX(300);
         head.setY(300);
         head.setWidth(20);
         head.setHeight(20);
         head.setArcWidth(10);
         head.setArcHeight(10);
         head.setFill(Color.GREEN);
+        snake.add(head);
     }
 
     private void processBody() {
@@ -47,9 +48,20 @@ public class Snake extends SnakeBody implements ActionListener {
         b.setArcHeight(10);
         b.setFill(Color.GREEN);
         body.add(b);
+        snake.addAll(body);
     }
 
     public void actionPerformed(ActionEvent e) {
+        resolveDirection();
+        field.getFood().forEach(food -> {
+            if (head.getX() == food.getX() && head.getY() == food.getY()) {
+                food.setFill(Color.GREEN);
+                addBodyElement(food);
+            }
+        });
+    }
+
+    private void resolveDirection() {
         double tmpX = head.getX();
         double tmpY = head.getY();
         if (Direction.LEFT.equals(direction)) {
@@ -98,5 +110,26 @@ public class Snake extends SnakeBody implements ActionListener {
         bNew.setArcHeight(10);
         bNew.setFill(Color.GREEN);
         body.add(bNew);
+    }
+
+    public void addBodyElement(Rectangle b) {
+        snake.add(b);
+        body.add(b);
+    }
+
+    public Field getField() {
+        return field;
+    }
+
+    public void setField(Field field) {
+        this.field = field;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        Snake.speed = 1000 / speed;
     }
 }

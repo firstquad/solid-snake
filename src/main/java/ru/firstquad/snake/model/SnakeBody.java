@@ -12,8 +12,9 @@ import java.util.List;
 public abstract class SnakeBody {
     protected Rectangle head = new Rectangle();
     protected List<Rectangle> body = new ArrayList<Rectangle>();
+    protected List<Rectangle> snake = new ArrayList<Rectangle>();
     protected Direction direction = Direction.RIGHT;
-    protected double step = 22;
+    protected static double step = 20;
 
     public Rectangle getHead() {
         return head;
